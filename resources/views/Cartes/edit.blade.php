@@ -1,27 +1,36 @@
 @extends('layouts.app')
 
-@section('title', 'Modifier une carte')
-
 @section('content')
-<div class="container mt-4">
-    <h2>Modifier une carte</h2>
+<div class="container">
+    <h2>Modifier la carte #{{ $carte->numero_carte }}</h2>
 
-    <form action="{{ route('cartes.updateStatus', $carte->id) }}" method="POST">
-    @csrf
-    @method('PUT')
+    <form action="{{ route('cartes.update', $carte->id) }}" method="POST">
+        @csrf
+        @method('PUT')
 
-    <div class="mb-3">
-        <label class="form-label">Statut</label>
-        <select name="statut" class="form-control">
-            <option value="active" {{ $carte->statut == 'active' ? 'selected' : '' }}>Active</option>
-            <option value="suspendue" {{ $carte->statut == 'suspendue' ? 'selected' : '' }}>Suspendue</option>
-            <option value="expiree" {{ $carte->statut == 'expiree' ? 'selected' : '' }}>Expirée</option>
-        </select>
-    </div>
+        <div class="mb-3">
+            <label>Étudiant</label>
+            <input type="text" class="form-control" value="{{ $carte->etudiant->nom }} {{ $carte->etudiant->prenom }}" disabled>
+        </div>
 
-    <button type="submit" class="btn btn-success">Mettre à jour</button>
-    <a href="{{ route('cartes.index') }}" class="btn btn-secondary">Annuler</a>
-</form>
+        <div class="mb-3">
+            <label for="statut">Statut</label>
+            <select name="statut" id="statut" class="form-control" required>
+                <option value="active" {{ $carte->statut == 'active' ? 'selected' : '' }}>Active</option>
+                <option value="suspendue" {{ $carte->statut == 'suspendue' ? 'selected' : '' }}>Suspendue</option>
+                <option value="expiree" {{ $carte->statut == 'expiree' ? 'selected' : '' }}>Expirée</option>
+            </select>
+        </div>
 
+        <div class="mb-3">
+            <label for="date_expiration">Date d'expiration</label>
+            <input type="date" name="date_expiration" id="date_expiration" class="form-control"
+            <input type="date" name="date_expiration" id="date_expiration" class="form-control"
+             value="{{ \Carbon\Carbon::parse($carte->date_expiration)->format('Y-m-d') }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        <a href="{{ route('cartes.index') }}" class="btn btn-secondary">Annuler</a>
+    </form>
 </div>
 @endsection

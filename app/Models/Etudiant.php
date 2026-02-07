@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Carte;
+
 
 class Etudiant extends Model
 {
     //
+    use HasFactory;
     
     protected $fillable = [ 
         'ine', 

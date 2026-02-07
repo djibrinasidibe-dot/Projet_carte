@@ -6,9 +6,9 @@
 
     <!-- Message de succès -->
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
     @endif
 
     <!-- Bouton pour créer un nouvel étudiant -->
@@ -31,34 +31,37 @@
         </thead>
         <tbody>
             @forelse($etudiants as $etudiant)
-                <tr>
-                    <td>{{ $etudiant->id }}</td>
-                    <td>{{ $etudiant->nom }}</td>
-                    <td>{{ $etudiant->prenom }}</td>
-                    <td>{{ $etudiant->ine }}</td>
-                    <td>{{ $etudiant->filiere }}</td>
-                    <td>{{ $etudiant->niveau }}</td>
-                    <td>{{ $etudiant->annee_academique }}</td>
-                    <td>
-                        @if($etudiant->photo)
-                            <img src="{{ asset('storage/'.$etudiant->photo) }}" alt="Photo" width="60" height="60" class="rounded">
-                        @else
-                            <span class="text-muted">Aucune</span>
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ route('etudiants.edit', $etudiant->id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                        <form action="{{ route('etudiants.destroy', $etudiant->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cet étudiant ?')">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $etudiant->id }}</td>
+                <td>{{ $etudiant->nom }}</td>
+                <td>{{ $etudiant->prenom }}</td>
+                <td>{{ $etudiant->ine }}</td>
+                <td>{{ $etudiant->filiere }}</td>
+                <td>{{ $etudiant->niveau }}</td>
+                <td>{{ $etudiant->annee_academique }}</td>
+                <td>
+                    @if($etudiant->photo)
+                    <img src="{{ asset('storage/' . $etudiant->photo) }}" width="80">
+                    @else
+                    <span class="text-muted">Aucune photo</span>
+                    @endif
+
+                </td>
+
+                </td>
+                <td>
+                    <a href="{{ route('etudiants.edit', $etudiant->id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <form action="{{ route('etudiants.destroy', $etudiant->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cet étudiant ?')">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
             @empty
-                <tr>
-                    <td colspan="9" class="text-center">Aucun étudiant trouvé</td>
-                </tr>
+            <tr>
+                <td colspan="9" class="text-center">Aucun étudiant trouvé</td>
+            </tr>
             @endforelse
         </tbody>
     </table>
